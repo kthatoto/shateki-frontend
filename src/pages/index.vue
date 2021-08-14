@@ -33,7 +33,7 @@ export default defineComponent({
       if (!user) return
       uid = user.uid
       const userRef = firebase.database().ref(`users/${uid}`)
-      userRef.on('value', (snapshot) => {
+      userRef.on('value', (snapshot: any) => {
         const data = snapshot.val()
         database.ref(`users/${uid}`).update(data ? {
           ...data,
