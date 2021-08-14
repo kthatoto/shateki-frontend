@@ -37,6 +37,7 @@ export default defineComponent({
       this.audioPlaying = true
       const audio = new Audio(bgmSound)
       audio.currentTime = 0
+      audio.volume = 0.05
       audio.loop = true
       audio.play()
     }
