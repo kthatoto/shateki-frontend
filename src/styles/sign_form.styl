@@ -1,0 +1,29 @@
+sign-form(module-name)
+  .{module-name}
+    text-align: center
+    padding: 200px 0
+    &__card
+      width: 300px
+      margin: auto
+      h2
+        text-align: center
+    &__form
+      margin: 15px 0
+    &__button
+      width: 150px
+    &__alert
+      margin-bottom: 20px
+      text-align: left
+      &.alert-enter-active, &.alert-leave-active
+        transition: all .3s ease
+        overflow: hidden
+      &.alert-enter, &.alert-leave-to
+        max-height: 0
+        margin-bottom: 0
+        padding: 0 16px
+      &.alert-enter-to, &.alert-leave
+        max-height: 40px
+        margin-bottom: 20px
+        padding: 8px 16px
+    &__link
+      margin-bottom: 5px

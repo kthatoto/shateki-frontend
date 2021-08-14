@@ -1,0 +1,49 @@
+html
+  color: #303133
+  font-family: "Helvetica Neue",Helvetica,"PingFang SC","Hiragino Sans GB","Microsoft YaHei","微软雅黑",Arial,sans-serif
+*
+  margin: 0
+  padding: 0
+  box-sizing: border-box
+  list-style: none
+a
+  text-decoration: none
+  color: inherit
+
+.icon
+  vertical-align: text-bottom
+  &.-l
+    margin-left: 5px
+  &.-r
+    margin-right: 5px
+  &.-mini
+    width: 12px
+    height: 12px
+  &.-tiny
+    width: 8px
+    height: 8px
+    vertical-align: middle
+img.customIcon
+  width: 15px
+  height: 15px
+  vertical-align: text-bottom
+  &.-l
+    margin-left: 5px
+  &.-r
+    margin-right: 5px
+
+.scroll-shadow
+  background:
+    linear-gradient(white 30%, rgba(255, 255, 255, 0)),
+    linear-gradient(rgba(255, 255, 255, 0), white 70%) 0 100%,
+    radial-gradient(farthest-side at 50% 0, rgba(0, 0, 0, .2), rgba(0, 0, 0, 0)),
+    radial-gradient(farthest-side 50% 100%, rgba(0, 0, 0, .2), rgba(0, 0, 0, 0)) 0 100%
+  background:
+    linear-gradient(white 30%, rgba(255, 255, 255, 0)),
+    linear-gradient(rgba(255, 255, 255, 0), white 70%) 0 100%,
+    radial-gradient(farthest-side at 50% 0, rgba(0, 0, 0, .2), rgba(0, 0, 0, 0)),
+    radial-gradient(farthest-side at 50% 100%, rgba(0, 0, 0, .2), rgba(0, 0, 0, 0)) 0 100%
+  background-repeat: no-repeat
+  background-color: white
+  background-size: 100% 40px, 100% 40px, 100% 14px, 100% 14px
+  background-attachment: local, local, scroll, scroll

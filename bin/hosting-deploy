@@ -1,0 +1,3 @@
+#!/bin/bash
+yarn generate
+firebase deploy --only hosting
