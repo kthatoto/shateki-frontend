@@ -5,7 +5,11 @@ el-container.default
       .logo 射的
     el-dropdown.dropdown(trigger="click" @command="handleCommand")
       el-button.dropdown__button
-        icon.icon(name="user")
+        template(v-if="signedIn")
+          img.profile-image(:src="profileImage")
+        template(v-else)
+          icon.icon(name="user")
+
       el-dropdown-menu(slot="dropdown")
         template(v-if="signedIn")
           el-dropdown-item(command="goToMypage") Mypage
@@ -34,6 +38,7 @@ export default defineComponent({
       await context.root.$firebase.auth().signOut()
       context.root.$message({ message: 'Signout successful', type: 'success', duration: 5000 })
       context.root.$router.push('/')
+      state.signedIn = false
     }
     const goToSignin = () => {
       context.root.$router.push('/signin')
@@ -41,14 +46,19 @@ export default defineComponent({
 
     const state = reactive<{
       signedIn: boolean
+      profileImage?: string
     }>({
-      signedIn: false
+      signedIn: false,
+      profileImage: undefined
     })
     const timerId = setInterval(() => {
       const onAuthStateChanged = context.root.context.app.onAuthStateChanged
       if (!onAuthStateChanged) return
       const currentUser = context.root.$firebase.auth().currentUser
-      if (currentUser) state.signedIn = true
+      if (currentUser) {
+        state.signedIn = true
+        state.profileImage = currentUser.photoURL
+      }
       clearInterval(timerId)
       if (!currentUser.displayName) {
         currentUser.updateProfile({ displayName: currentUser.email.split('@')[0] })
@@ -85,4 +95,8 @@ export default defineComponent({
       color: white
       line-height: 60px
       padding: 0 16px
+    .profile-image
+      width: 40px
+      height: 40px
+      border-radius: 20px
 </style>
