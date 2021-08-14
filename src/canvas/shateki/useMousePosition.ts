@@ -1,24 +1,21 @@
 import { reactive } from '@vue/composition-api'
 
 import Drawer from './drawer'
+import { CanvasState } from './index'
 
-export default (d: Drawer, canvas: any) => {
-  const position = reactive({ x: 600, y: 0 })
+export default (d: Drawer, canvas: any, state: CanvasState) => {
   canvas.addEventListener('mousemove', (event: any) => {
     const rect = canvas.getBoundingClientRect()
-    position.x = event.clientX - rect.left
-    position.y = event.clientY - rect.top
+    state.mousePosition.x = event.clientX - rect.left
+    state.mousePosition.y = event.clientY - rect.top
   })
 
   const drawMousePosition = () => {
     d.ctx.fillStyle = 'black'
     d.ctx.font = '24px san-serif'
-    d.fillText(`x:${position.x}`, { x: 1100, y: 30 })
-    d.fillText(`y:${position.y}`, { x: 1100, y: 50 })
+    d.fillText(`x:${state.mousePosition.x}`, { x: 1100, y: 30 })
+    d.fillText(`y:${state.mousePosition.y}`, { x: 1100, y: 50 })
   }
 
-  return {
-    mousePosition: position,
-    drawMousePosition
-  }
+  return { drawMousePosition }
 }
