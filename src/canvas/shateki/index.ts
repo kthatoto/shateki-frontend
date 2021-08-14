@@ -20,7 +20,7 @@ export interface CanvasState {
   mousePosition: Vector
 }
 
-export const TARGET_SPEED = 2
+export const TARGET_SPEED = 4
 
 export default () => {
   const canvas = ref<any>(undefined)
@@ -39,7 +39,7 @@ export default () => {
     d.setContext(canvasContext.value)
 
     draw()
-    setInterval(() => draw(), 10)
+    setInterval(() => draw(), 20)
 
     const { drawMousePosition } = useMousePosition(d, canvas.value, state)
     funs.drawMousePosition = drawMousePosition

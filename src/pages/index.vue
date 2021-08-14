@@ -10,7 +10,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from '@vue/composition-api'
+import { defineComponent, onBeforeUnmount } from '@vue/composition-api'
 
 import { appStores } from '@/stores/appStores'
 import useCanvas from '@/canvas/shateki/index'
@@ -18,12 +18,31 @@ import Item from '@/models/item'
 import bgmSound from '@/assets/musics/background.mp3'
 
 export default defineComponent({
-  setup () {
+  setup (_, context) {
     useCanvas()
 
     const itemsStore = appStores.itemsStore
     Item.fetchList().then((items: Item[]) => {
       itemsStore.items.value = items
+    })
+
+    let uid: string | undefined = undefined
+    const firebase = context.root.$firebase
+    const database = firebase.database()
+    firebase.auth().onAuthStateChanged((user: any) => {
+      if (!user) return
+      uid = user.uid
+      // uidで既存ユーザー取ってきてスコアとか既存のものを使う
+      database.ref(`users/${uid}`).set({
+        uid,
+        score: 0,
+        name: user.displayName,
+        photoURL: user.photoURL,
+        online: true
+      })
+    })
+    onBeforeUnmount(() => {
+      database.ref(`users/${uid}`).update({ online: false })
     })
   },
   data () {

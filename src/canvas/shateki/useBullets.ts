@@ -14,7 +14,12 @@ import gunShootSound from '@/assets/musics/gun_shoot2.mp3'
 import gunReloadSound from '@/assets/musics/gun_reload.mp3'
 
 const RELOAD_TIME = 3000
-const BULLET_SPEED = 4
+const BULLET_SPEED = 8
+const randomDamage = (name: string) => {
+  const damage = parseInt(7 + Math.random() * (Math.random() * 15))
+  console.log(`「${name}」に${damage}ダメージを与えた！`)
+  return damage
+}
 
 export default (d: Drawer, state: CanvasState) => {
   const bulletsStore = appStores.bulletsStore
@@ -56,7 +61,7 @@ export default (d: Drawer, state: CanvasState) => {
         const hitStatus: HitStatus = itemsStore.checkHit(b.goal)
         if (hitStatus.hit) {
           const hitItem: Item = hitStatus.item!
-          hitItem.hp -= 10
+          hitItem.hp -= randomDamage(hitItem.name)
           if (hitItem.hp <= 0) {
             itemsStore.defeatItem(hitItem)
           } else {

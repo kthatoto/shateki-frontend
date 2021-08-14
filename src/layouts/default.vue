@@ -13,6 +13,7 @@ el-container.default
 
       el-dropdown-menu(slot="dropdown")
         template(v-if="signedIn")
+          el-dropdown-item(command="goToPlay") Play
           el-dropdown-item(command="goToMypage") Mypage
           el-dropdown-item(command="signout") Signout
         template(v-else)
@@ -28,9 +29,13 @@ import { appStores } from '@/stores/appStores'
 export default defineComponent({
   setup (_, context: any) {
     const handleCommand = (command: string) => {
+      if (command === 'goToPlay') goToPlay()
       if (command === 'goToMypage') goToMypage()
       if (command === 'signout') signout()
       if (command === 'goToSignin') goToSignin()
+    }
+    const goToPlay = () => {
+      context.root.$router.push('/')
     }
     const goToMypage = () => {
       context.root.$router.push('/mypage')

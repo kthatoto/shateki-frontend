@@ -10,7 +10,7 @@ export default (d: Drawer, state: CanvasState) => {
 
   const moveTargetVertically = () => {
     const targetMinY = 0
-    const targetMaxY = 350
+    const targetMaxY = 370
     if (state.targetPosition.y <= targetMinY) {
       state.targetPosition.y = targetMinY
       state.targetPosition.vy = TARGET_SPEED
@@ -23,7 +23,7 @@ export default (d: Drawer, state: CanvasState) => {
   const targetImage = new Image()
   targetImage.src = require(`~/assets/target.png`)
   const drawTarget = () => {
-    if (targetImage.complete) d.drawImage(targetImage, { x: state.mousePosition.x - 30, y: state.targetPosition.y }, 60, 60)
+    if (targetImage.complete) d.drawImage(targetImage, { x: state.mousePosition.x - 30, y: state.targetPosition.y - 30 }, 60, 60)
   }
 
   return {
