@@ -9,8 +9,10 @@ interface Vector {
   y: number
 }
 export interface CanvasState {
-  x: number
-  y: number
+  targetPosition: {
+    y: number
+    vy: number
+  }
 }
 
 export default (items: { value: Item[] }) => {
@@ -18,10 +20,9 @@ export default (items: { value: Item[] }) => {
   const canvasContext = ref<any>(undefined)
   const d = new Drawer()
   const state = reactive<CanvasState>({
-    x: 0,
-    y: 0
+    targetPosition: { y: 100, vy: 1 }
   })
-  let currentMousePosition = reactive<Vector>({ x: 0, y: 0 })
+  let currentMousePosition = reactive<Vector>({ x: 600, y: 0 })
 
   const funs = reactive<{
     drawMousePosition?: Function
@@ -49,6 +50,9 @@ export default (items: { value: Item[] }) => {
     drawBases(d)
     drawItems(d)
     drawGuns(d)
+
+    moveTargetVertically()
+    drawTarget(d)
     if (funs.drawMousePosition) funs.drawMousePosition()
   }
 
@@ -63,6 +67,24 @@ export default (items: { value: Item[] }) => {
   gunImage.onload = () => {}
   const drawGuns = (d: Drawer) => {
     if (gunImage.complete) d.drawImage(gunImage, { x: currentMousePosition.x - 32, y: 420 }, 64, 191)
+  }
+
+  const moveTargetVertically = () => {
+    const speed = 2
+    const targetMinY = 30
+    const targetMaxY = 350
+    if (state.targetPosition.y <= targetMinY) {
+      state.targetPosition.y = targetMinY
+      state.targetPosition.vy = speed
+    } else if (state.targetPosition.y >= targetMaxY) {
+      state.targetPosition.y = targetMaxY
+      state.targetPosition.vy = -speed
+    }
+    state.targetPosition.y += state.targetPosition.vy
+  }
+  const drawTarget = (d: Drawer) => {
+    d.ctx.fillStyle = 'yellow'
+    d.fillRect({ x: currentMousePosition.x - 10, y: state.targetPosition.y }, 20, 20)
   }
 
   watch(

@@ -3,7 +3,7 @@ import { reactive } from '@vue/composition-api'
 import Drawer from './drawer'
 
 export default (d: Drawer, canvas: any) => {
-  const position = reactive({ x: 0, y: 0 })
+  const position = reactive({ x: 600, y: 0 })
   canvas.addEventListener('mousemove', (event: any) => {
     const rect = canvas.getBoundingClientRect()
     position.x = event.clientX - rect.left
