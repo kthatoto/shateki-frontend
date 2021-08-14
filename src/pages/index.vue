@@ -17,7 +17,7 @@ import Item from '@/models/item'
 export default defineComponent({
   meta: { mustBeAuthenticated: true },
   setup (_, context) {
-    const shatekiId: number = 5
+    const shatekiId: number = 10
 
     const items = ref<Item[]>([])
     Item.fetchList(shatekiId).then((itemsResponse: Item[]) => items.value = itemsResponse)
@@ -32,7 +32,10 @@ export default defineComponent({
 .shateki
   width: 100%
   height: 100vh
-  padding-top: 100px
+  padding-top: 60px
+  @media screen and (min-height:900px) {
+    padding-top: 100px
+  }
   background-color: #373b6b
   overflow: hidden
   &__top__wrapper
@@ -59,7 +62,7 @@ export default defineComponent({
     margin: auto;
     width: 1380px
     height: 200px
-    max-height: calc(100vh - 700px)
+    max-height: calc(100vh - 600px)
     position: absolute
     top: -130px
     left: 0;
