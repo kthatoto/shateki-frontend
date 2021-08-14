@@ -2,6 +2,7 @@ import { onMounted, ref, reactive, watch } from '@vue/composition-api'
 
 import Drawer from './drawer'
 import useMousePosition from './useMousePosition'
+import useDraws from './useDraws'
 import Item from '@/models/item'
 
 interface Vector {
@@ -19,10 +20,12 @@ export default (items: { value: Item[] }) => {
   const canvas = ref<any>(undefined)
   const canvasContext = ref<any>(undefined)
   const d = new Drawer()
+  const targetSpeed = 2
   const state = reactive<CanvasState>({
-    targetPosition: { y: 100, vy: 1 }
+    targetPosition: { y: 100, vy: targetSpeed }
   })
   let currentMousePosition = reactive<Vector>({ x: 600, y: 0 })
+  const { drawBackground, drawBases } = useDraws(d)
 
   const funs = reactive<{
     drawMousePosition?: Function
@@ -47,19 +50,14 @@ export default (items: { value: Item[] }) => {
     d.setState(state)
     d.clearScreen()
 
-    drawBases(d)
+    drawBackground()
+    drawBases()
     drawItems(d)
     drawGuns(d)
 
     moveTargetVertically()
     drawTarget(d)
     if (funs.drawMousePosition) funs.drawMousePosition()
-  }
-
-  const drawBases = (d: Drawer) => {
-    d.ctx.fillStyle = '#8b0000'
-    d.fillRect({ x: 50, y: 150 }, 1100, 30)
-    d.fillRect({ x: 50, y: 350 }, 1100, 30)
   }
 
   const gunImage = new Image()
@@ -69,15 +67,14 @@ export default (items: { value: Item[] }) => {
   }
 
   const moveTargetVertically = () => {
-    const speed = 2
     const targetMinY = 30
     const targetMaxY = 350
     if (state.targetPosition.y <= targetMinY) {
       state.targetPosition.y = targetMinY
-      state.targetPosition.vy = speed
+      state.targetPosition.vy = targetSpeed
     } else if (state.targetPosition.y >= targetMaxY) {
       state.targetPosition.y = targetMaxY
-      state.targetPosition.vy = -speed
+      state.targetPosition.vy = -targetSpeed
     }
     state.targetPosition.y += state.targetPosition.vy
   }
