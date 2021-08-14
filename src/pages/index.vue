@@ -1,12 +1,30 @@
 <template lang="pug">
 .index
-  h2 Hello World
+  .shateki__list
+    nuxt-link.shateki__item(to="/shateki/1")
+      .shateki__thumbnail
+      .shateki__title
+        h3 みんなで射的
 </template>
 
-<script>
-export default {
-}
+<script lang="ts">
+import { defineComponent } from '@vue/composition-api'
+
+export default defineComponent({
+  setup () {}
+})
 </script>
 
 <style lang="stylus" scoped>
+.index
+  padding: 32px
+  .shateki
+    &__list
+      display: flex
+    &__thumbnail
+      width: 250px
+      height: 160px
+      background-color: navy
+    &__title
+      font-size: 18px
 </style>

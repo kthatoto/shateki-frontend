@@ -1,11 +1,13 @@
 <template lang="pug">
 el-container.default
   el-header.default__header
-      el-dropdown.dropdown(trigger="click" @command="handleCommand")
-        el-button.dropdown__button
-          icon.icon(name="user")
-        el-dropdown-menu(slot="dropdown")
-          el-dropdown-item(command="signout") signout
+    nuxt-link(to="/")
+      .logo 射的
+    el-dropdown.dropdown(trigger="click" @command="handleCommand")
+      el-button.dropdown__button
+        icon.icon(name="user")
+      el-dropdown-menu(slot="dropdown")
+        el-dropdown-item(command="signout") signout
   nuxt.root
 </template>
 
@@ -36,7 +38,8 @@ export default defineComponent({
 <style lang="stylus" scoped>
 .default
   &__header
-    text-align: right
+    display: flex
+    justify-content: space-between
     border-bottom: 1px solid borderColor
     .dropdown
       height: 100%
@@ -46,4 +49,11 @@ export default defineComponent({
         border-radius: 0
         border-top: none
         border-bottom: none
+    .logo
+      font-weight: bold
+      font-size: 32px
+      background-color: navy
+      color: white
+      line-height: 60px
+      padding: 0 16px
 </style>
