@@ -7,8 +7,13 @@ export const buildBulletsStore = () => {
 
   Bullet.fetchList().then((bulletsResponse: Bullet[]) => bullets.value = bulletsResponse)
 
+  const addBullet = (b: Bullet) => {
+    bullets.value.push(b)
+  }
+
   return {
-    bullets
+    bullets,
+    addBullet
   }
 }
 
