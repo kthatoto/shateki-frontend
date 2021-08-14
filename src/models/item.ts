@@ -33,6 +33,16 @@ export default class Item {
     }
   }
 
+  get barColor (): 'green' | 'yellow' | 'red' {
+    if (this.hp <= this.weight * 0.2) return 'red'
+    if (this.hp <= this.weight * 0.4) return 'yellow'
+    return 'green'
+  }
+
+  get barWidth (): number {
+    return this.width * (this.hp / this.weight) - 2
+  }
+
   name: string
   position: Vector
   score: number

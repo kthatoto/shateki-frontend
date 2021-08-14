@@ -80,8 +80,8 @@ export default () => {
         const hpBarHeight = 20
         d.ctx.fillStyle = 'black'
         d.fillRect({ x: item.position.x, y: item.position.y + item.height }, item.width, hpBarHeight)
-        d.ctx.fillStyle = 'green'
-        d.fillRect({ x: item.position.x + 1, y: item.position.y + item.height + 1 }, item.width - 2, hpBarHeight - 2)
+        d.ctx.fillStyle = item.barColor
+        d.fillRect({ x: item.position.x + 1, y: item.position.y + item.height + 1 }, item.barWidth, hpBarHeight - 2)
       }
     })
   }

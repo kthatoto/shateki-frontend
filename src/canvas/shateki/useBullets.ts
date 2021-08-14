@@ -6,6 +6,7 @@ import Drawer from './drawer'
 import CreateSound from './createSound'
 import { CanvasState } from './index'
 import Bullet from '@/models/bullet'
+import Item from '@/models/item'
 
 import gunHitSound from '@/assets/musics/gun_hit1.mp3'
 import gunOutSound from '@/assets/musics/gun_out1.mp3'
@@ -54,9 +55,13 @@ export default (d: Drawer, state: CanvasState) => {
 
         const hitStatus: HitStatus = itemsStore.checkHit(b.goal)
         if (hitStatus.hit) {
-          // TODO: HPを徐々に減らす
-          CreateSound(gunHitSound)
-          itemsStore.defeatItem(hitStatus.item!)
+          const hitItem: Item = hitStatus.item!
+          hitItem.hp -= 10
+          if (hitItem.hp <= 0) {
+            itemsStore.defeatItem(hitItem)
+          } else {
+            CreateSound(gunHitSound)
+          }
         }
       }
       d.drawImage(bulletImage, { x: b.position.x - 7, y: b.position.y }, 14, 28)
