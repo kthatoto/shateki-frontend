@@ -67,7 +67,7 @@ export default (items: { value: Item[] }) => {
   }
 
   const moveTargetVertically = () => {
-    const targetMinY = 30
+    const targetMinY = 0
     const targetMaxY = 350
     if (state.targetPosition.y <= targetMinY) {
       state.targetPosition.y = targetMinY
