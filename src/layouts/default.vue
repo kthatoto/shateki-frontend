@@ -1,10 +1,9 @@
 <template lang="pug">
 el-container.default
   el-header.default__header
-    nuxt-link(to="/")
-      .logo 射的
+    div
     el-dropdown.dropdown(trigger="click" @command="handleCommand")
-      el-button.dropdown__button
+      el-button
         template(v-if="signedIn")
           img.profile-image(v-if="profileImage" :src="profileImage")
           .profile-image(v-else)
@@ -80,8 +79,10 @@ export default defineComponent({
 .default
   &__header
     display: flex
+    position: fixed
+    width: 100%
     justify-content: space-between
-    border-bottom: 1px solid borderColor
+    z-index: 3
     .dropdown
       height: 100%
       &__button
@@ -93,7 +94,6 @@ export default defineComponent({
     .logo
       font-weight: bold
       font-size: 32px
-      background-color: navy
       color: white
       line-height: 60px
       padding: 0 16px
