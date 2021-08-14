@@ -1,5 +1,6 @@
 import firebase from 'firebase/app'
 import 'firebase/auth'
+import 'firebase/database'
 
 import { appStores } from '@/stores/appStores'
 
@@ -32,6 +33,10 @@ export default ({ app, redirect }, inject) => {
       return
     }
     appStores.rootStore.setUser({ ...user, jwt: user.ya })
+    // const database = app.$firebase.database()
+    // console.log(database)
+    // database.ref('users').push({ uid: user.id })
+
     if (meta.mustBeEmailVerified && !user.emailVerified) {
       app.$message({
         message: 'Please confirm your email address',

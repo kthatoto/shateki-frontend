@@ -5,6 +5,8 @@ export interface User {
   email?: string
   emailVerified: boolean
   jwt?: string
+
+  bullets: number
 }
 
 export const buildRootStore = () => {
