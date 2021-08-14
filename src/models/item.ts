@@ -22,6 +22,14 @@ export default class Item {
     this.width = width
     this.height = height
     this.imageUrl = imageUrl
+
+    this.alive = true
+
+    const newImage = new Image()
+    newImage.src = '/images/items/' + imageUrl
+    newImage.onload = () => {
+      this.image = newImage
+    }
   }
 
   name: string
@@ -31,5 +39,7 @@ export default class Item {
   width: number
   height: number
   imageUrl: string
+
   image?: any
+  alive: boolean
 }

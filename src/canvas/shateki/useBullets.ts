@@ -54,6 +54,8 @@ export default (d: Drawer, state: CanvasState) => {
 
         const hitStatus: HitStatus = itemsStore.checkHit(b.goal)
         if (hitStatus.hit) {
+          // TODO: HPを徐々に減らす
+          itemsStore.defeatItem(hitStatus.item!)
         }
       }
       d.drawImage(bulletImage, { x: b.position.x - 7, y: b.position.y }, 14, 28)

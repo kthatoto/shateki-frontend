@@ -69,24 +69,11 @@ export default () => {
     if (funs.drawMousePosition) funs.drawMousePosition()
   }
 
-  const items = appStores.itemsStore.items
-  watch(
-    () => items.value,
-    () => {
-      if (!items.value) return
-      items.value.forEach((item: Item) => {
-        if (item.image) return
-        const image = new Image()
-        image.src = '/images/items/' + item.imageUrl!
-        image.onload = () => {
-          item.image = image
-        }
-      })
-    }
-  )
+  const itemsStore = appStores.itemsStore
   const drawItems = (d: Drawer) => {
-    if (!items.value) return
-    items.value.forEach((item: Item) => {
+    const items: Item[] = itemsStore.displayingItems.value
+    if (!items) return
+    items.forEach((item: Item) => {
       if (item.image) d.drawImage(item.image, item.position, item.width, item.height)
     })
   }
