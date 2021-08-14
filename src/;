@@ -13,6 +13,10 @@
       label プロフィール画像
       img.mypage__icon(v-if="currentImage" :src="currentImage")
       p(v-else) 現在登録されていません
+      el-upload(
+        list-type="picture-card" :limit="1" action="" :auto-upload="false"
+        :file-list="imageList"
+        :show-file-list="false" :on-change="handleFilesChange" :on-remove="handleFilesChange")
     .mypage__submit
       el-button(type="primary" @click="save") 保存
 </template>
@@ -23,38 +27,50 @@ import { defineComponent, reactive, toRefs, computed } from '@vue/composition-ap
 import useAuthentication from '@/hooks/useAuthentication'
 
 export default defineComponent({
-  setup (_, context: any) {
+  setup (_, context) {
     useAuthentication(context)
 
     const state = reactive<{
-      currentUser: any
       email: string
       name: string
       currentImage: any
+      image: any
     }>({
-      currentUser: undefined,
       email: '',
       name: '',
-      currentImage: undefined
+      currentImage: undefined,
+      image: undefined
     })
 
     setTimeout(() => {
       const onAuthStateChanged = context.root.context.app.onAuthStateChanged
-      state.currentUser = context.root.$firebase.auth().currentUser
-      if (onAuthStateChanged && state.currentUser) {
-        state.email = state.currentUser.email
-        state.name = state.currentUser.displayName
-        state.currentImage = state.currentUser.photoURL
+      const currentUser = context.root.$firebase.auth().currentUser
+      if (onAuthStateChanged && currentUser) {
+        state.email = currentUser.email
+        state.name = currentUser.displayName
+        state.currentImage = currentUser.photoURL
       }
-    }, 1000)
+    })
 
-    const save = async () => {
-      state.currentUser.updateProfile({ displayName: state.name })
+    const handleFilesChange = (file: any, fileList: any[]) => {
+      if (fileList.length === 0) {
+        state.image = null
+        return
+      }
+      state.image = file
+    }
+
+    const save = () => {
+      currentUser.updateProfile({
+        displayName: state.name,
+        photoURL: state.image || state.currentImage
+      })
       context.root.$message({ message: '保存しました', type: 'success', duration: 5000 })
     }
 
     return {
       ...toRefs(state),
+      handleFilesChange,
       save
     }
   }
@@ -86,10 +102,4 @@ export default defineComponent({
     width: 80px
     height: 80px
     border-radius: 40px
-  .thumbnail
-    width: 100%
-    height: 100%
-    background-size: contain
-    background-repeat: no-repeat
-    background-position: center
 </style>

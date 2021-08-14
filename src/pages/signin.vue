@@ -88,19 +88,6 @@ export default {
       this.form.loading = false
       this.$message({ message: 'Signin success', type: 'success', duration: 5000 })
     },
-    // async sendEmailVerification () {
-    //   if (!this.$firebase.auth().currentUser) return
-    //   await this.$firebase.auth().currentUser.sendEmailVerification()
-    //   const email = this.$firebase.auth().currentUser.email
-    //   const style = 'color: black; text-decoration: underline'
-    //   this.$message({
-    //     dangerouslyUseHTMLString: true,
-    //     message: `Sent confirmation mail to <span style="${style}">${email}</span>`,
-    //     type: 'success',
-    //     duration: 0,
-    //     showClose: true
-    //   })
-    // },
     async googleAuth () {
       await this.$firebase.auth().signOut()
       const GoogleAuthProvider = this.$firebase.auth.GoogleAuthProvider

@@ -13,7 +13,7 @@ import { defineComponent } from '@vue/composition-api'
 import { appStores } from '@/stores/appStores'
 
 export default defineComponent({
-  setup (_, context) {
+  setup (_, context: any) {
     const database = context.root.$firebase.database()
 
     const user = appStores.rootStore.state.user

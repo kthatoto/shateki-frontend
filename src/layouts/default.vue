@@ -50,6 +50,9 @@ export default defineComponent({
       const currentUser = context.root.$firebase.auth().currentUser
       if (currentUser) state.signedIn = true
       clearInterval(timerId)
+      if (!currentUser.displayName) {
+        currentUser.updateProfile({ displayName: currentUser.email.split('@')[0] })
+      }
     }, 500)
 
     return {
