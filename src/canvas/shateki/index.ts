@@ -1,9 +1,13 @@
 import { onMounted, ref, reactive, watch } from '@vue/composition-api'
 
 import Drawer from './drawer'
-import useDrawMousePointerPosition from './drawMousePointerPosition'
+import useMousePosition from './useMousePosition'
 import Item from '@/models/item'
 
+interface Vector {
+  x: number
+  y: number
+}
 export interface CanvasState {
   x: number
   y: number
@@ -17,11 +21,12 @@ export default (items: { value: Item[] }) => {
     x: 0,
     y: 0
   })
+  let currentMousePosition = reactive<Vector>({ x: 0, y: 0 })
 
   const funs = reactive<{
-    drawMousePointerPosition?: Function
+    drawMousePosition?: Function
   }>({
-    drawMousePointerPosition: undefined
+    drawMousePosition: undefined
   })
 
   onMounted(() => {
@@ -30,10 +35,11 @@ export default (items: { value: Item[] }) => {
     d.setContext(canvasContext.value)
 
     draw()
-    setInterval(() => draw(), 1000)
+    setInterval(() => draw(), 10)
 
-    const { drawMousePointerPosition } = useDrawMousePointerPosition(d, canvas.value)
-    funs.drawMousePointerPosition = drawMousePointerPosition
+    const { drawMousePosition, mousePosition } = useMousePosition(d, canvas.value)
+    currentMousePosition = mousePosition
+    funs.drawMousePosition = drawMousePosition
   })
 
   const draw = () => {
@@ -42,13 +48,21 @@ export default (items: { value: Item[] }) => {
 
     drawBases(d)
     drawItems(d)
-    if (funs.drawMousePointerPosition) funs.drawMousePointerPosition()
+    drawGuns(d)
+    if (funs.drawMousePosition) funs.drawMousePosition()
   }
 
   const drawBases = (d: Drawer) => {
     d.ctx.fillStyle = '#8b0000'
     d.fillRect({ x: 50, y: 150 }, 1100, 30)
     d.fillRect({ x: 50, y: 350 }, 1100, 30)
+  }
+
+  const gunImage = new Image()
+  gunImage.src = require(`~/assets/gun.png`)
+  gunImage.onload = () => {}
+  const drawGuns = (d: Drawer) => {
+    if (gunImage.complete) d.drawImage(gunImage, { x: currentMousePosition.x - 32, y: 420 }, 64, 191)
   }
 
   watch(
@@ -66,7 +80,7 @@ export default (items: { value: Item[] }) => {
   )
   const drawItems = (d: Drawer) => {
     items.value.forEach((item: any) => {
-      if (item.image) d.ctx.drawImage(item.image, item.position.x, item.position.y, item.width, item.height)
+      if (item.image) d.drawImage(item.image, item.position, item.width, item.height)
     })
   }
 }

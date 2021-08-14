@@ -31,4 +31,8 @@ export default class Drawer {
   fillText (text: string, position: Vector) {
     this.ctx.fillText(text, position.x, position.y)
   }
+
+  drawImage (image: any, position: Vector, width?: number, height?: number) {
+    this.ctx.drawImage(image, position.x, position.y, width, height)
+  }
 }

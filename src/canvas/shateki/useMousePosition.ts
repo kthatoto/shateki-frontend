@@ -10,7 +10,7 @@ export default (d: Drawer, canvas: any) => {
     position.y = event.clientY - rect.top
   })
 
-  const drawMousePointerPosition = () => {
+  const drawMousePosition = () => {
     d.ctx.fillStyle = 'black'
     d.ctx.font = '24px san-serif'
     d.fillText(`x:${position.x}`, { x: 1100, y: 30 })
@@ -18,6 +18,7 @@ export default (d: Drawer, canvas: any) => {
   }
 
   return {
-    drawMousePointerPosition
+    mousePosition: position,
+    drawMousePosition
   }
 }
