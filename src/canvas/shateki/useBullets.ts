@@ -16,7 +16,7 @@ import gunReloadSound from '@/assets/musics/gun_reload.mp3'
 const RELOAD_TIME = 3000
 const BULLET_SPEED = 8
 const randomDamage = (name: string) => {
-  const damage = parseInt(7 + Math.random() * (Math.random() * 15))
+  const damage = Math.round(7 + Math.random() * (Math.random() * 15))
   console.log(`「${name}」に${damage}ダメージを与えた！`)
   return damage
 }

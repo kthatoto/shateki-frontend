@@ -18,7 +18,7 @@ import Item from '@/models/item'
 import bgmSound from '@/assets/musics/background.mp3'
 
 export default defineComponent({
-  setup (_, context) {
+  setup (_, context: any) {
     useCanvas()
 
     const itemsStore = appStores.itemsStore
