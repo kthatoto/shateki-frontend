@@ -9,11 +9,12 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref, onMounted } from '@vue/composition-api'
+import { defineComponent } from '@vue/composition-api'
 
 import { appStores } from '@/stores/appStores'
 import useCanvas from '@/canvas/shateki/index'
 import Item from '@/models/item'
+import bgmSound from '@/assets/musics/background.mp3'
 
 export default defineComponent({
   setup () {
@@ -23,6 +24,12 @@ export default defineComponent({
     Item.fetchList().then((items: Item[]) => {
       itemsStore.items.value = items
     })
+  },
+  mounted () {
+    const audio = new Audio(bgmSound)
+    audio.currentTime = 0
+    audio.loop = true
+    audio.play()
   }
 })
 </script>
@@ -60,10 +67,10 @@ export default defineComponent({
   &__stand__top__wrapper
     margin: auto;
     width: 1380px
-    height: 200px
+    height: 180px
     max-height: calc(100vh - 600px)
     position: absolute
-    top: -130px
+    top: -110px
     left: 0;
     right: 0;
     z-index: 1;
