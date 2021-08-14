@@ -64,7 +64,6 @@ export default (items: { value: Item[] }) => {
 
   const gunImage = new Image()
   gunImage.src = require(`~/assets/gun.png`)
-  gunImage.onload = () => {}
   const drawGuns = (d: Drawer) => {
     if (gunImage.complete) d.drawImage(gunImage, { x: currentMousePosition.x - 32, y: 420 }, 64, 191)
   }
@@ -82,9 +81,10 @@ export default (items: { value: Item[] }) => {
     }
     state.targetPosition.y += state.targetPosition.vy
   }
+  const targetImage = new Image()
+  targetImage.src = require(`~/assets/target.png`)
   const drawTarget = (d: Drawer) => {
-    d.ctx.fillStyle = 'yellow'
-    d.fillRect({ x: currentMousePosition.x - 10, y: state.targetPosition.y }, 20, 20)
+    if (targetImage.complete) d.drawImage(targetImage, { x: currentMousePosition.x - 30, y: state.targetPosition.y }, 60, 60)
   }
 
   watch(
