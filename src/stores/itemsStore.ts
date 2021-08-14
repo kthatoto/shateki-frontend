@@ -5,7 +5,7 @@ import Item from '@/models/item'
 export const buildItemsStore = () => {
   const items = ref<Item[]>([])
 
-  const shatekiId = 5
+  const shatekiId = 10
   Item.fetchList(shatekiId).then((itemsResponse: Item[]) => items.value = itemsResponse)
 
   return {
