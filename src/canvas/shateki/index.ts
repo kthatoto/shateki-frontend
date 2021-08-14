@@ -22,7 +22,7 @@ export interface CanvasState {
 
 export const TARGET_SPEED = 2
 
-export default (items: { value: Item[] }) => {
+export default () => {
   const canvas = ref<any>(undefined)
   const canvasContext = ref<any>(undefined)
   const d = new Drawer()
@@ -70,6 +70,7 @@ export default (items: { value: Item[] }) => {
     if (funs.drawMousePosition) funs.drawMousePosition()
   }
 
+  const items = appStores.itemsStore.items
   watch(
     () => items.value,
     () => {
