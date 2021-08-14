@@ -5,8 +5,6 @@ import Bullet from '@/models/bullet'
 export const buildBulletsStore = () => {
   const bullets = ref<Bullet[]>([])
 
-  Bullet.fetchList().then((bulletsResponse: Bullet[]) => bullets.value = bulletsResponse)
-
   const addBullet = (b: Bullet) => {
     bullets.value.push(b)
   }

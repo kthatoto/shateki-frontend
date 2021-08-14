@@ -11,12 +11,18 @@
 <script lang="ts">
 import { defineComponent, ref, onMounted } from '@vue/composition-api'
 
+import { appStores } from '@/stores/appStores'
 import useCanvas from '@/canvas/shateki/index'
 import Item from '@/models/item'
 
 export default defineComponent({
   setup () {
     useCanvas()
+
+    const itemsStore = appStores.itemsStore
+    Item.fetchList().then((items: Item[]) => {
+      itemsStore.items.value = items
+    })
   }
 })
 </script>
