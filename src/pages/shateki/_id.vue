@@ -81,7 +81,7 @@ export default defineComponent({
     left: 0;
     right: 0;
     background-size: cover
-    background-image: url('~@/assets/images/items/5916.png')
+    background-image: url('~@/assets/images/background/bottom.png')
   .canvas
     width: 100%
     height: 100%
