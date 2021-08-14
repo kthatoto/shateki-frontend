@@ -1,6 +1,7 @@
 import { reactive } from '@vue/composition-api'
 
 import { appStores } from '@/stores/appStores'
+import { HitStatus } from '@/stores/itemsStore'
 import Drawer from './drawer'
 import { CanvasState } from './index'
 import Bullet from '@/models/bullet'
@@ -10,6 +11,7 @@ const BULLET_SPEED = 4
 
 export default (d: Drawer, state: CanvasState) => {
   const bulletsStore = appStores.bulletsStore
+  const itemsStore = appStores.itemsStore
 
   const bulletState = reactive<{
     reloaded: boolean
@@ -34,8 +36,17 @@ export default (d: Drawer, state: CanvasState) => {
   const drawBullets = () => {
     if (!bulletImage.complete) return
     const newBullets = bulletsStore.bullets.value.map((b: Bullet) => {
+      if (b.goaled) return
+
       b.position.y += b.vy
-      if (b.position.y <= b.goal.y) return
+      if (b.position.y <= b.goal.y) {
+        b.position.y = b.goal.y
+        b.goaled = true
+
+        const hitStatus: HitStatus = itemsStore.checkHit(b.goal)
+        if (hitStatus.hit) {
+        }
+      }
       d.drawImage(bulletImage, { x: b.position.x - 7, y: b.position.y }, 14, 28)
       return b
     }).filter((b: Bullet | undefined) => b)

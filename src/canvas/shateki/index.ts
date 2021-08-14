@@ -77,7 +77,7 @@ export default () => {
       items.value.forEach((item: Item) => {
         if (item.image) return
         const image = new Image()
-        image.src = '/images/items/' + item.image_url!
+        image.src = '/images/items/' + item.imageUrl!
         image.onload = () => {
           item.image = image
         }
@@ -86,7 +86,7 @@ export default () => {
   )
   const drawItems = (d: Drawer) => {
     if (!items.value) return
-    items.value.forEach((item: any) => {
+    items.value.forEach((item: Item) => {
       if (item.image) d.drawImage(item.image, item.position, item.width, item.height)
     })
   }

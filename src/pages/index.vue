@@ -11,12 +11,19 @@
 <script lang="ts">
 import { defineComponent } from '@vue/composition-api'
 
+import { appStores } from '@/stores/appStores'
 import useCanvas from '@/canvas/shateki/index'
+import Item from '@/models/item'
 import bgmSound from '@/assets/musics/background.mp3'
 
 export default defineComponent({
   setup () {
     useCanvas()
+
+    const itemsStore = appStores.itemsStore
+    Item.fetchList().then((items: Item[]) => {
+      itemsStore.items.value = items
+    })
   },
   mounted () {
     const audio = new Audio(bgmSound)
@@ -31,7 +38,10 @@ export default defineComponent({
 .shateki
   width: 100%
   height: 100vh
-  padding-top: 100px
+  padding-top: 60px
+  @media screen and (min-height:900px) {
+    padding-top: 100px
+  }
   background-color: #373b6b
   overflow: hidden
   &__top__wrapper
