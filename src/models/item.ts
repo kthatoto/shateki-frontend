@@ -5,7 +5,7 @@ interface ItemsResponse {
 }
 
 export default class Item {
-  static async fetchList () {
+  static async fetchList (): Promise<Item[]> {
     const endpoint = `https://aluminum-318311.uw.r.appspot.com/api/stores/10`
     const res: any = await axios.get(endpoint)
     return res.data.store.items
