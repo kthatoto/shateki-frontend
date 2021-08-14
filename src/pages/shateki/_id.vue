@@ -14,9 +14,9 @@ export default defineComponent({
   setup (_, context) {
     const shatekiId = context.root.$route.params.id
 
-    Item.fetchList(shatekiId).then((items: Item[]) => {
-      useCanvas(items)
-    })
+    const items = ref<Item[]>([])
+    Item.fetchList(shatekiId).then((itemsResponse: Item[]) => items.value = itemsResponse)
+    useCanvas(items)
 
     return {}
   }

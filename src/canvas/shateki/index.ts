@@ -1,4 +1,4 @@
-import { onMounted, ref, reactive } from '@vue/composition-api'
+import { onMounted, ref, reactive, watch } from '@vue/composition-api'
 
 import Drawer from './drawer'
 import useDrawMousePointerPosition from './drawMousePointerPosition'
@@ -9,7 +9,7 @@ export interface CanvasState {
   y: number
 }
 
-export default (items: Item[]) => {
+export default (items: { value: Item[] }) => {
   const canvas = ref<any>(undefined)
   const canvasContext = ref<any>(undefined)
   const d = new Drawer()
@@ -51,16 +51,23 @@ export default (items: Item[]) => {
     d.fillRect({ x: 50, y: 350 }, 1100, 30)
   }
 
-  items.forEach((item: any) => {
-    const image = new Image()
-    image.src = item.src
-    image.onload = () => {
-      item.image = image
+  watch(
+    () => items.value,
+    () => {
+      items.value.forEach((item: Item) => {
+        if (item.image) return
+        const image = new Image()
+        image.src = item.image_url
+        image.onload = () => {
+          item.image = image
+        }
+      })
     }
-  })
+  )
   const drawItems = (d: Drawer) => {
-    items.forEach((item: any) => {
-      if (item.image) d.ctx.drawImage(item.image, item.x, item.y)
+    console.log(items.value)
+    items.value.forEach((item: any) => {
+      if (item.image) d.ctx.drawImage(item.image, item.position.x, item.position.y, item.width, item.height)
     })
   }
 }
