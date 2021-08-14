@@ -10,8 +10,17 @@
 <script lang="ts">
 import { defineComponent } from '@vue/composition-api'
 
+import { appStores } from '@/stores/appStores'
+
 export default defineComponent({
-  setup () {}
+  setup (_, context) {
+    const database = context.root.$firebase.database()
+
+    const user = appStores.rootStore.state.user
+    setTimeout(() => {
+      database.ref('users').push({ uid: appStores.rootStore.state.user.uid })
+    }, 1000)
+  }
 })
 </script>
 

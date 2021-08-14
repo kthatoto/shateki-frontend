@@ -33,9 +33,6 @@ export default ({ app, redirect }, inject) => {
       return
     }
     appStores.rootStore.setUser({ ...user, jwt: user.ya })
-    // const database = app.$firebase.database()
-    // console.log(database)
-    // database.ref('users').push({ uid: user.id })
 
     if (meta.mustBeEmailVerified && !user.emailVerified) {
       app.$message({
