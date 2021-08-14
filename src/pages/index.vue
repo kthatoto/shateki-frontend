@@ -13,13 +13,10 @@ import { defineComponent, ref, onMounted } from '@vue/composition-api'
 
 import useCanvas from '@/canvas/shateki/index'
 import Item from '@/models/item'
-import useAuthentication from '@/hooks/useAuthentication'
 
 export default defineComponent({
   meta: { mustBeAuthenticated: true },
   setup (_, context) {
-    useAuthentication(context)
-
     const shatekiId: number = 5
 
     const items = ref<Item[]>([])
