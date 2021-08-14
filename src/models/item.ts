@@ -22,6 +22,7 @@ export default class Item {
     this.width = width
     this.height = height
     this.imageUrl = imageUrl
+    this.alive = true
   }
 
   name: string
@@ -32,4 +33,6 @@ export default class Item {
   height: number
   imageUrl: string
   image?: any
+
+  alive: boolean
 }
