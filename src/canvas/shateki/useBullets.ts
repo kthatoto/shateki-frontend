@@ -9,7 +9,7 @@ import Bullet from '@/models/bullet'
 import Item from '@/models/item'
 
 import gunHitSound from '@/assets/musics/gun_hit1.mp3'
-import gunOutSound from '@/assets/musics/gun_out1.mp3'
+import gunOutSound from '@/assets/musics/gun_out2.mp3'
 import gunShootSound from '@/assets/musics/gun_shoot2.mp3'
 import gunReloadSound from '@/assets/musics/gun_reload.mp3'
 
@@ -62,6 +62,8 @@ export default (d: Drawer, state: CanvasState) => {
           } else {
             CreateSound(gunHitSound)
           }
+        } else {
+          CreateSound(gunOutSound)
         }
       }
       d.drawImage(bulletImage, { x: b.position.x - 7, y: b.position.y }, 14, 28)
