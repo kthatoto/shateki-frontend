@@ -1,5 +1,6 @@
 <template lang="pug">
 .shateki
+  .shateki__start__view(@click="startGame()" v-if="!audioPlaying")
   .shateki__top__wrapper
   .shateki__canvas__wrapper
     .shateki__stand__top__wrapper
@@ -25,11 +26,20 @@ export default defineComponent({
       itemsStore.items.value = items
     })
   },
-  mounted () {
-    const audio = new Audio(bgmSound)
-    audio.currentTime = 0
-    audio.loop = true
-    audio.play()
+  data () {
+    return {
+      audioPlaying: false
+    }
+  },
+  methods: {
+    startGame () {
+      if (this.audioPlaying) return
+      this.audioPlaying = true
+      const audio = new Audio(bgmSound)
+      audio.currentTime = 0
+      audio.loop = true
+      audio.play()
+    }
   }
 })
 </script>
@@ -44,6 +54,12 @@ export default defineComponent({
   }
   background-color: #373b6b
   overflow: hidden
+  &__start__view
+    position: absolute
+    top: 0
+    width: 100vw
+    height: 100vh
+    z-index: 2
   &__top__wrapper
     height: 200px
     width: 100%
