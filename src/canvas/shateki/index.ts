@@ -2,13 +2,14 @@ import { onMounted, ref, reactive } from '@vue/composition-api'
 
 import Drawer from './drawer'
 import useDrawMousePointerPosition from './drawMousePointerPosition'
+import Item from '@/models/item'
 
 export interface CanvasState {
   x: number
   y: number
 }
 
-export default () => {
+export default (items: Item[]) => {
   const canvas = ref<any>(undefined)
   const canvasContext = ref<any>(undefined)
   const d = new Drawer()
@@ -17,7 +18,7 @@ export default () => {
     y: 0
   })
 
-  const functions = reactive<{
+  const funs = reactive<{
     drawMousePointerPosition?: Function
   }>({
     drawMousePointerPosition: undefined
@@ -28,9 +29,11 @@ export default () => {
     canvasContext.value = canvas.value.getContext('2d')
     d.setContext(canvasContext.value)
 
-    setInterval(() => draw(), 10)
+    draw()
+    setInterval(() => draw(), 1000)
+
     const { drawMousePointerPosition } = useDrawMousePointerPosition(d, canvas.value)
-    functions.drawMousePointerPosition = drawMousePointerPosition
+    funs.drawMousePointerPosition = drawMousePointerPosition
   })
 
   const draw = () => {
@@ -39,7 +42,7 @@ export default () => {
 
     drawBases(d)
     drawItems(d)
-    if (functions.drawMousePointerPosition) functions.drawMousePointerPosition()
+    if (funs.drawMousePointerPosition) funs.drawMousePointerPosition()
   }
 
   const drawBases = (d: Drawer) => {
@@ -48,9 +51,16 @@ export default () => {
     d.fillRect({ x: 50, y: 350 }, 1100, 30)
   }
 
-  const items = [
-    { x: 70, y: 40,  }
-  ]
+  items.forEach((item: any) => {
+    const image = new Image()
+    image.src = item.src
+    image.onload = () => {
+      item.image = image
+    }
+  })
   const drawItems = (d: Drawer) => {
+    items.forEach((item: any) => {
+      if (item.image) d.ctx.drawImage(item.image, item.x, item.y)
+    })
   }
 }

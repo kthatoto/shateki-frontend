@@ -5,15 +5,18 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref } from '@vue/composition-api'
+import { defineComponent, ref, onMounted } from '@vue/composition-api'
 
 import useCanvas from '@/canvas/shateki/index'
+import Item from '@/models/item'
 
 export default defineComponent({
   setup (_, context) {
-    // const shatekiId = context.root.$route.params.id
+    const shatekiId = context.root.$route.params.id
 
-    const cnvs = useCanvas()
+    Item.fetchList(shatekiId).then((items: Item[]) => {
+      useCanvas(items)
+    })
 
     return {}
   }

@@ -12,9 +12,9 @@ export default (d: Drawer, canvas: any) => {
 
   const drawMousePointerPosition = () => {
     d.ctx.fillStyle = 'black'
-    d.ctx.font = '24px'
-    d.fillText(`x:${position.x}`, { x: 1100, y: 10 })
-    d.fillText(`y:${position.y}`, { x: 1100, y: 30 })
+    d.ctx.font = '24px san-serif'
+    d.fillText(`x:${position.x}`, { x: 1100, y: 30 })
+    d.fillText(`y:${position.y}`, { x: 1100, y: 50 })
   }
 
   return {
