@@ -1,5 +1,6 @@
 import { onMounted, ref, reactive, watch } from '@vue/composition-api'
 
+import { appStores } from '@/stores/appStores'
 import Drawer from './drawer'
 import useMousePosition from './useMousePosition'
 import useDraws from './useDraws'
@@ -53,16 +54,19 @@ export default (items: { value: Item[] }) => {
     drawBackground()
     drawBases()
     drawItems(d)
-    drawGuns(d)
 
-    moveTargetVertically()
-    drawTarget(d)
+    if (appStores.rootStore.state.user) {
+      drawGun(d)
+      moveTargetVertically()
+      drawTarget(d)
+    }
+
     if (funs.drawMousePosition) funs.drawMousePosition()
   }
 
   const gunImage = new Image()
   gunImage.src = require(`~/assets/gun.png`)
-  const drawGuns = (d: Drawer) => {
+  const drawGun = (d: Drawer) => {
     if (gunImage.complete) d.drawImage(gunImage, { x: currentMousePosition.x - 32, y: 420 }, 64, 191)
   }
 
