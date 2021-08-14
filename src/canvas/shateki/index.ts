@@ -90,7 +90,7 @@ export default (items: { value: Item[] }) => {
       items.value.forEach((item: Item) => {
         if (item.image) return
         const image = new Image()
-        image.src = item.image_url!
+        image.src = '/images/items/' + item.image_url!
         image.onload = () => {
           item.image = image
         }
