@@ -9,14 +9,20 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref, onMounted } from '@vue/composition-api'
+import { defineComponent } from '@vue/composition-api'
 
 import useCanvas from '@/canvas/shateki/index'
-import Item from '@/models/item'
+import bgmSound from '@/assets/musics/background.mp3'
 
 export default defineComponent({
   setup () {
     useCanvas()
+  },
+  mounted () {
+    const audio = new Audio(bgmSound)
+    audio.currentTime = 0
+    audio.loop = 1
+    audio.play()
   }
 })
 </script>
@@ -51,10 +57,10 @@ export default defineComponent({
   &__stand__top__wrapper
     margin: auto;
     width: 1380px
-    height: 200px
+    height: 180px
     max-height: calc(100vh - 700px)
     position: absolute
-    top: -130px
+    top: -110px
     left: 0;
     right: 0;
     z-index: 1;
