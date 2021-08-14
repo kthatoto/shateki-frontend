@@ -87,6 +87,7 @@ export default (items: { value: Item[] }) => {
   watch(
     () => items.value,
     () => {
+      if (!items.value) return
       items.value.forEach((item: Item) => {
         if (item.image) return
         const image = new Image()
@@ -98,6 +99,7 @@ export default (items: { value: Item[] }) => {
     }
   )
   const drawItems = (d: Drawer) => {
+    if (!items.value) return
     items.value.forEach((item: any) => {
       if (item.image) d.drawImage(item.image, item.position, item.width, item.height)
     })

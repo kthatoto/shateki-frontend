@@ -1,11 +1,4 @@
 <template lang="pug">
-.shateki
-  .shateki__top__wrapper
-  .shateki__canvas__wrapper
-    .shateki__stand__top__wrapper
-    .canvas__wrapper
-      canvas.canvas#shateki-canvas(width="1200" height="600")
-    .shateki__stand__wrapper
 </template>
 
 <script lang="ts">
