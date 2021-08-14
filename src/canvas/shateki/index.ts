@@ -31,11 +31,6 @@ export default () => {
     targetPosition: { y: 100, vy: TARGET_SPEED },
     mousePosition: { x: 600, y: 0 }
   })
-
-  const { drawBackground, drawBases } = useDraws(d)
-  const { drawGun, moveTargetVertically, drawTarget } = useSelfGun(d, state)
-  const { shootBullet, drawBullets } = useBullets(d, state)
-
   const funs = reactive<{ drawMousePosition?: Function }>({ drawMousePosition: undefined })
 
   onMounted(() => {
@@ -51,6 +46,10 @@ export default () => {
     canvas.value.addEventListener('click', (event: any) => shootBullet())
   })
 
+  const { drawBackground, drawBases } = useDraws(d)
+  const { drawGun, moveTargetVertically, drawTarget } = useSelfGun(d, state)
+  const { shootBullet, drawBullets } = useBullets(d, state)
+
   const draw = () => {
     d.setState(state)
     d.clearScreen()
@@ -59,7 +58,7 @@ export default () => {
     drawBases()
 
     drawItems(d)
-    // drawBullets(d)
+    drawBullets()
 
     if (appStores.rootStore.state.user) {
       drawGun()
