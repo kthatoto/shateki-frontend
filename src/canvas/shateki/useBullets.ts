@@ -55,6 +55,7 @@ export default (d: Drawer, state: CanvasState) => {
         const hitStatus: HitStatus = itemsStore.checkHit(b.goal)
         if (hitStatus.hit) {
           // TODO: HPを徐々に減らす
+          CreateSound(gunHitSound)
           itemsStore.defeatItem(hitStatus.item!)
         }
       }
