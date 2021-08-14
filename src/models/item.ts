@@ -11,4 +11,7 @@ export default class Item {
     const res: any = await axios.get(endpoint)
     return res.data.store.items
   }
+
+  image?: any
+  image_url?: string
 }

@@ -12,7 +12,7 @@ import Item from '@/models/item'
 
 export default defineComponent({
   setup (_, context) {
-    const shatekiId = context.root.$route.params.id
+    const shatekiId: number = Number(context.root.$route.params.id)
 
     const items = ref<Item[]>([])
     Item.fetchList(shatekiId).then((itemsResponse: Item[]) => items.value = itemsResponse)

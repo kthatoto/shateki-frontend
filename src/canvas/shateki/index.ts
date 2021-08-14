@@ -57,7 +57,7 @@ export default (items: { value: Item[] }) => {
       items.value.forEach((item: Item) => {
         if (item.image) return
         const image = new Image()
-        image.src = item.image_url
+        image.src = item.image_url!
         image.onload = () => {
           item.image = image
         }
@@ -65,7 +65,6 @@ export default (items: { value: Item[] }) => {
     }
   )
   const drawItems = (d: Drawer) => {
-    console.log(items.value)
     items.value.forEach((item: any) => {
       if (item.image) d.ctx.drawImage(item.image, item.position.x, item.position.y, item.width, item.height)
     })
