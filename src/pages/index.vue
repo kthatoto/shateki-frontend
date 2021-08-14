@@ -32,13 +32,21 @@ export default defineComponent({
     firebase.auth().onAuthStateChanged((user: any) => {
       if (!user) return
       uid = user.uid
-      // uidで既存ユーザー取ってきてスコアとか既存のものを使う
-      database.ref(`users/${uid}`).set({
-        uid,
-        score: 0,
-        name: user.displayName,
-        photoURL: user.photoURL,
-        online: true
+      const userRef = firebase.database().ref(`users/${uid}`)
+      userRef.on('value', (snapshot) => {
+        const data = snapshot.val()
+        database.ref(`users/${uid}`).update(data ? {
+          ...data,
+          name: user.displayName,
+          photoURL: user.photoURL,
+          online: true
+        } : {
+          uid,
+          name: user.displayName,
+          photoURL: user.photoURL,
+          score: 0,
+          online: true
+        })
       })
     })
     onBeforeUnmount(() => {
