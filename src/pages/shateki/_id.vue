@@ -39,7 +39,7 @@ export default defineComponent({
     width: 100%
     position: absolute
     top: 0px
-    background-image: url('~@/assets/images/items/6.png')
+    background-image: url('~@/assets/images/background/lantern.png')
     background-size: cover
     background-repeat: no-repeat
     background-position: center
