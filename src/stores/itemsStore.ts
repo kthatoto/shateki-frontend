@@ -1,4 +1,4 @@
-import { ref } from '@vue/composition-api'
+import { ref, computed } from '@vue/composition-api'
 
 import Item from '@/models/item'
 
@@ -10,6 +10,7 @@ export interface HitStatus {
 
 export const buildItemsStore = () => {
   const items = ref<Item[]>([])
+  const displayingItems = computed<Item[]>(() => items.value.filter((item: Item) => item.alive))
 
   const checkHit = (position: Vector): HitStatus => {
     const hitItem: Item | undefined = items.value.filter((item: Item) => item.alive).find((item: Item) => {
@@ -29,6 +30,7 @@ export const buildItemsStore = () => {
 
   return {
     items,
+    displayingItems,
     checkHit,
     defeatItem
   }
