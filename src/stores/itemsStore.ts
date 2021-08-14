@@ -3,11 +3,16 @@ import { ref } from '@vue/composition-api'
 import Item from '@/models/item'
 
 interface Vector { x: number; y: number }
+export interface HitStatus {
+  hit: boolean
+  item?: Item
+}
 
 export const buildItemsStore = () => {
   const items = ref<Item[]>([])
 
-  const checkHit = (position: Vector) => {
+  const checkHit = (position: Vector): HitStatus => {
+    return { hit: false }
     // items.value.filter()
   }
 
