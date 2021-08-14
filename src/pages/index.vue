@@ -28,7 +28,7 @@ export default defineComponent({
   mounted () {
     const audio = new Audio(bgmSound)
     audio.currentTime = 0
-    audio.loop = 1
+    audio.loop = true
     audio.play()
   }
 })
@@ -68,7 +68,7 @@ export default defineComponent({
     margin: auto;
     width: 1380px
     height: 180px
-    max-height: calc(100vh - 700px)
+    max-height: calc(100vh - 600px)
     position: absolute
     top: -110px
     left: 0;
