@@ -17,9 +17,9 @@ export default defineComponent({
     const database = context.root.$firebase.database()
 
     const user = appStores.rootStore.state.user
-    setTimeout(() => {
-      database.ref('users').push({ uid: appStores.rootStore.state.user.uid })
-    }, 1000)
+    // setTimeout(() => {
+    //   database.ref('users').push({ uid: appStores.rootStore.state.user.uid })
+    // }, 1000)
   }
 })
 </script>

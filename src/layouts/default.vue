@@ -7,12 +7,15 @@ el-container.default
       el-button.dropdown__button
         icon.icon(name="user")
       el-dropdown-menu(slot="dropdown")
-        el-dropdown-item(command="signout") signout
+        template(v-if="signedIn")
+          el-dropdown-item(command="signout") signout
+        template(v-else)
+          el-dropdown-item(command="goToSignin") signin
   nuxt.root
 </template>
 
 <script lang="ts">
-import { defineComponent } from '@vue/composition-api'
+import { defineComponent, reactive, toRefs } from '@vue/composition-api'
 
 import { appStores } from '@/stores/appStores'
 
@@ -20,16 +23,34 @@ export default defineComponent({
   setup (_, context: any) {
     const handleCommand = (command: string) => {
       if (command === 'signout') signout()
+      if (command === 'goToSignin') goToSignin()
     }
     const signout = async () => {
       await context.root.$firebase.auth().signOut()
       context.root.$message({ message: 'Signout successful', type: 'success', duration: 5000 })
       context.root.$router.push('/')
     }
+    const goToSignin = () => {
+      context.root.$router.push('/signin')
+    }
+
+    const state = reactive<{
+      signedIn: boolean
+    }>({
+      signedIn: false
+    })
+    const timerId = setInterval(() => {
+      const onAuthStateChanged = context.root.context.app.onAuthStateChanged
+      if (!onAuthStateChanged) return
+      const currentUser = context.root.$firebase.auth().currentUser
+      if (currentUser) state.signedIn = true
+      clearInterval(timerId)
+    }, 500)
 
     return {
       handleCommand,
-      signout
+      signout,
+      ...toRefs(state)
     }
   }
 })

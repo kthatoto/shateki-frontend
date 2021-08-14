@@ -11,6 +11,7 @@ import useCanvas from '@/canvas/shateki/index'
 import Item from '@/models/item'
 
 export default defineComponent({
+  meta: { mustBeAuthenticated: true },
   setup (_, context) {
     const shatekiId: number = Number(context.root.$route.params.id)
 
