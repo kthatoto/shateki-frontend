@@ -31,7 +31,6 @@ export default () => {
     targetPosition: { y: 100, vy: TARGET_SPEED },
     mousePosition: { x: 600, y: 0 }
   })
-  const funs = reactive<{ drawMousePosition?: Function }>({ drawMousePosition: undefined })
 
   onMounted(() => {
     canvas.value = document.getElementById('shateki-canvas')
@@ -41,8 +40,7 @@ export default () => {
     draw()
     setInterval(() => draw(), 20)
 
-    const { drawMousePosition } = useMousePosition(d, canvas.value, state)
-    funs.drawMousePosition = drawMousePosition
+    useMousePosition(d, canvas.value, state)
     canvas.value.addEventListener('click', (event: any) => shootBullet())
   })
 
@@ -65,8 +63,6 @@ export default () => {
       moveTargetVertically()
       drawTarget()
     }
-
-    if (funs.drawMousePosition) funs.drawMousePosition()
   }
 
   const itemsStore = appStores.itemsStore
