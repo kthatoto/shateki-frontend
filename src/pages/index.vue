@@ -29,6 +29,8 @@ export default defineComponent({
     let uid: string | undefined = undefined
     const firebase = context.root.$firebase
     const database = firebase.database()
+    appStores.rootStore.setDatabase(database)
+
     firebase.auth().onAuthStateChanged((user: any) => {
       if (!user) return
       uid = user.uid

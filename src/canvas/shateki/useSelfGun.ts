@@ -1,11 +1,27 @@
+import { ref } from '@vue/composition-api'
+
 import Drawer from './drawer'
 import { CanvasState, TARGET_SPEED } from './index'
 
+import { appStores } from '@/stores/appStores'
+
 export default (d: Drawer, state: CanvasState) => {
+  const uid = appStores.rootStore.uid
+
+  const gunRef = ref<any>(undefined)
   const gunImage = new Image()
   gunImage.src = require(`~/assets/gun.png`)
   const drawGun = () => {
-    if (gunImage.complete) d.drawImage(gunImage, { x: state.mousePosition.x - 32, y: 420 }, 64, 191)
+    if (gunImage.complete) {
+      const x = state.mousePosition.x - 32
+      d.drawImage(gunImage, { x, y: 420 }, 64, 191)
+      if (!uid.value) return
+      if (!gunRef.value) {
+        const database = appStores.rootStore.database.value
+        gunRef.value = database.ref(`guns/${uid.value}`)
+      }
+      gunRef.set({ uid: uid.value, x })
+    }
   }
 
   const moveTargetVertically = () => {
