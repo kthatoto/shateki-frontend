@@ -74,7 +74,15 @@ export default () => {
     const items: Item[] = itemsStore.displayingItems.value
     if (!items) return
     items.forEach((item: Item) => {
-      if (item.image) d.drawImage(item.image, item.position, item.width, item.height)
+      if (item.image) {
+        d.drawImage(item.image, item.position, item.width, item.height)
+
+        const hpBarHeight = 20
+        d.ctx.fillStyle = 'black'
+        d.fillRect({ x: item.position.x, y: item.position.y + item.height }, item.width, hpBarHeight)
+        d.ctx.fillStyle = 'green'
+        d.fillRect({ x: item.position.x + 1, y: item.position.y + item.height + 1 }, item.width - 2, hpBarHeight - 2)
+      }
     })
   }
 }

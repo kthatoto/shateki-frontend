@@ -24,6 +24,7 @@ export default class Item {
     this.imageUrl = imageUrl
 
     this.alive = true
+    this.hp = weight
 
     const newImage = new Image()
     newImage.src = '/images/items/' + imageUrl
@@ -35,11 +36,12 @@ export default class Item {
   name: string
   position: Vector
   score: number
-  weight: number
+  weight: number // maxHP
   width: number
   height: number
   imageUrl: string
 
   image?: any
   alive: boolean
+  hp: number
 }

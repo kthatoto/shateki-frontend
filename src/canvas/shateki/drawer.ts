@@ -6,9 +6,6 @@ interface Vector {
 }
 
 export default class Drawer {
-  // constructor () {
-  // }
-
   ctx: any
   setContext(ctx: any) {
     this.ctx = ctx
