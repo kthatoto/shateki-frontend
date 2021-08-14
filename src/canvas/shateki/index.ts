@@ -5,6 +5,7 @@ import Drawer from './drawer'
 import useMousePosition from './useMousePosition'
 import useDraws from './useDraws'
 import useSelfGun from './useSelfGun'
+import useBullets from './useBullets'
 import Item from '@/models/item'
 
 interface Vector {
@@ -33,6 +34,7 @@ export default (items: { value: Item[] }) => {
 
   const { drawBackground, drawBases } = useDraws(d)
   const { drawGun, moveTargetVertically, drawTarget } = useSelfGun(d, state)
+  const { shootBullet, drawBullets } = useBullets(d, state)
 
   const funs = reactive<{ drawMousePosition?: Function }>({ drawMousePosition: undefined })
 
