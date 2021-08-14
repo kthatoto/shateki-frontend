@@ -8,9 +8,10 @@ el-container.default
         icon.icon(name="user")
       el-dropdown-menu(slot="dropdown")
         template(v-if="signedIn")
-          el-dropdown-item(command="signout") signout
+          el-dropdown-item(command="goToMypage") Mypage
+          el-dropdown-item(command="signout") Signout
         template(v-else)
-          el-dropdown-item(command="goToSignin") signin
+          el-dropdown-item(command="goToSignin") Signin
   nuxt.root
 </template>
 
@@ -22,8 +23,12 @@ import { appStores } from '@/stores/appStores'
 export default defineComponent({
   setup (_, context: any) {
     const handleCommand = (command: string) => {
+      if (command === 'goToMypage') goToMypage()
       if (command === 'signout') signout()
       if (command === 'goToSignin') goToSignin()
+    }
+    const goToMypage = () => {
+      context.root.$router.push('/mypage')
     }
     const signout = async () => {
       await context.root.$firebase.auth().signOut()
