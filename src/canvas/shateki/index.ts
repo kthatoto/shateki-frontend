@@ -4,6 +4,8 @@ import { appStores } from '@/stores/appStores'
 import Drawer from './drawer'
 import useMousePosition from './useMousePosition'
 import useDraws from './useDraws'
+import useSelfGun from './useSelfGun'
+import useBullets from './useBullets'
 import Item from '@/models/item'
 
 interface Vector {
@@ -15,24 +17,26 @@ export interface CanvasState {
     y: number
     vy: number
   }
+  mousePosition: Vector
 }
 
-export default (items: { value: Item[] }) => {
+export const TARGET_SPEED = 2
+
+export default () => {
   const canvas = ref<any>(undefined)
   const canvasContext = ref<any>(undefined)
   const d = new Drawer()
-  const targetSpeed = 2
-  const state = reactive<CanvasState>({
-    targetPosition: { y: 100, vy: targetSpeed }
-  })
-  let currentMousePosition = reactive<Vector>({ x: 600, y: 0 })
-  const { drawBackground, drawBases } = useDraws(d)
 
-  const funs = reactive<{
-    drawMousePosition?: Function
-  }>({
-    drawMousePosition: undefined
+  const state = reactive<CanvasState>({
+    targetPosition: { y: 100, vy: TARGET_SPEED },
+    mousePosition: { x: 600, y: 0 }
   })
+
+  const { drawBackground, drawBases } = useDraws(d)
+  const { drawGun, moveTargetVertically, drawTarget } = useSelfGun(d, state)
+  const { shootBullet, drawBullets } = useBullets(d, state)
+
+  const funs = reactive<{ drawMousePosition?: Function }>({ drawMousePosition: undefined })
 
   onMounted(() => {
     canvas.value = document.getElementById('shateki-canvas')
@@ -42,9 +46,9 @@ export default (items: { value: Item[] }) => {
     draw()
     setInterval(() => draw(), 10)
 
-    const { drawMousePosition, mousePosition } = useMousePosition(d, canvas.value)
-    currentMousePosition = mousePosition
+    const { drawMousePosition } = useMousePosition(d, canvas.value, state)
     funs.drawMousePosition = drawMousePosition
+    canvas.value.addEventListener('click', (event: any) => shootBullet())
   })
 
   const draw = () => {
@@ -53,41 +57,20 @@ export default (items: { value: Item[] }) => {
 
     drawBackground()
     drawBases()
+
     drawItems(d)
+    // drawBullets(d)
 
     if (appStores.rootStore.state.user) {
-      drawGun(d)
+      drawGun()
       moveTargetVertically()
-      drawTarget(d)
+      drawTarget()
     }
 
     if (funs.drawMousePosition) funs.drawMousePosition()
   }
 
-  const gunImage = new Image()
-  gunImage.src = require(`~/assets/gun.png`)
-  const drawGun = (d: Drawer) => {
-    if (gunImage.complete) d.drawImage(gunImage, { x: currentMousePosition.x - 32, y: 420 }, 64, 191)
-  }
-
-  const moveTargetVertically = () => {
-    const targetMinY = 0
-    const targetMaxY = 350
-    if (state.targetPosition.y <= targetMinY) {
-      state.targetPosition.y = targetMinY
-      state.targetPosition.vy = targetSpeed
-    } else if (state.targetPosition.y >= targetMaxY) {
-      state.targetPosition.y = targetMaxY
-      state.targetPosition.vy = -targetSpeed
-    }
-    state.targetPosition.y += state.targetPosition.vy
-  }
-  const targetImage = new Image()
-  targetImage.src = require(`~/assets/target.png`)
-  const drawTarget = (d: Drawer) => {
-    if (targetImage.complete) d.drawImage(targetImage, { x: currentMousePosition.x - 30, y: state.targetPosition.y }, 60, 60)
-  }
-
+  const items = appStores.itemsStore.items
   watch(
     () => items.value,
     () => {

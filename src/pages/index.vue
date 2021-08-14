@@ -15,15 +15,8 @@ import useCanvas from '@/canvas/shateki/index'
 import Item from '@/models/item'
 
 export default defineComponent({
-  meta: { mustBeAuthenticated: true },
-  setup (_, context) {
-    const shatekiId: number = 10
-
-    const items = ref<Item[]>([])
-    Item.fetchList(shatekiId).then((itemsResponse: Item[]) => items.value = itemsResponse)
-    useCanvas(items)
-
-    return {}
+  setup () {
+    useCanvas()
   }
 })
 </script>
