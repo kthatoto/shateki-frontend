@@ -31,9 +31,9 @@ export default defineComponent({
 <style lang="stylus" scoped>
 .shateki
   width: 100%
-  height: calc(100vh - 60px)
+  height: 100vh
   padding-top: 100px
-  background-color: navy
+  background-color: #373b6b
   overflow: hidden
   &__top__wrapper
     height: 200px
