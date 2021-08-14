@@ -6,7 +6,9 @@ el-container.default
     el-dropdown.dropdown(trigger="click" @command="handleCommand")
       el-button.dropdown__button
         template(v-if="signedIn")
-          img.profile-image(:src="profileImage")
+          img.profile-image(v-if="profileImage" :src="profileImage")
+          .profile-image(v-else)
+            icon.icon(name="user")
         template(v-else)
           icon.icon(name="user")
 
@@ -99,4 +101,9 @@ export default defineComponent({
       width: 40px
       height: 40px
       border-radius: 20px
+      border: 1px solid lightgray
+      .icon
+        margin: 10px
+        width: 20px
+        height: 20px
 </style>
