@@ -20,8 +20,14 @@ export default (context: any) => {
         const fbItems: FBItem[] = Object.values(data)
 
         itemsStore.items.value = itemsStore.items.value.map((item: Item) => {
-          const fbItem: FBItem = fbItems.find((fbi: FBItem) => fbi.name === item.name)
-          item.hp = fbItem.hp
+          const fbItem: FBItem | undefined = fbItems.find((fbi: FBItem) => fbi.name === item.name)
+          if (!fbItem) return item
+          item.hp = Math.max(fbItem.hp, 0)
+          if (item.hp === 0) {
+            item.alive = false
+          } else {
+            item.alive = true
+          }
           return item
         })
       })
