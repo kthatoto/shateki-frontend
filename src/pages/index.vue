@@ -26,12 +26,15 @@ export default defineComponent({
     const firebase = context.root.$firebase
     const database = firebase.database()
     appStores.rootStore.setDatabase(database)
+    let execed = false
 
     firebase.auth().onAuthStateChanged((user: any) => {
       if (!user) return
       uid = user.uid
       const userRef = firebase.database().ref(`users/${uid}`)
       userRef.on('value', (snapshot: any) => {
+        if (execed) return
+        execed = true
         const data = snapshot.val()
         const common = {
           name: user.displayName,
