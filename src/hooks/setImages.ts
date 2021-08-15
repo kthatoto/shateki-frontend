@@ -40,7 +40,6 @@ export default (context: any) => {
     itemsStore.items.value = itemsStore.items.value.map((item: Item) => {
       if (item.alive) return item
       item.revivalCount += 1
-      console.log(item.revivalCount)
       if (item.revivalCount / 100 > Math.random()) {
         item.hp = item.weight
         item.alive = true
