@@ -41,6 +41,7 @@ export const buildItemsStore = () => {
     items.value = items.value.map((i: Item) => {
       if (i.name !== item.name) return i
       i.alive = false
+      i.hp = 0
       return i
     })
   }

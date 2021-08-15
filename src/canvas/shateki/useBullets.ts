@@ -70,6 +70,7 @@ export default (d: Drawer, state: CanvasState) => {
           hitItem.hp -= randomDamage(hitItem.name)
           if (hitItem.hp <= 0) {
             itemsStore.defeatItem(hitItem)
+            hitItem.hp = 0
           } else {
             CreateSound(gunHitSound)
           }
