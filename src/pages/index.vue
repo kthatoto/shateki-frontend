@@ -7,6 +7,7 @@
     .canvas__wrapper
       canvas.canvas#shateki-canvas(width="1200" height="600")
     .shateki__stand__wrapper
+  UserRanking
 </template>
 
 <script lang="ts">
@@ -16,8 +17,10 @@ import { appStores } from '@/stores/appStores'
 import useCanvas from '@/canvas/shateki/index'
 import bgmSound from '@/assets/musics/background.mp3'
 import setImages from '@/hooks/setImages'
+import UserRanking from '@/components/UserRanking'
 
 export default defineComponent({
+  components: { UserRanking },
   setup (_, context: any) {
     useCanvas()
     setImages(context)
