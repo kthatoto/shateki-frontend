@@ -14,17 +14,13 @@ import { defineComponent, onBeforeUnmount } from '@vue/composition-api'
 
 import { appStores } from '@/stores/appStores'
 import useCanvas from '@/canvas/shateki/index'
-import Item from '@/models/item'
 import bgmSound from '@/assets/musics/background.mp3'
+import setImages from '@/hooks/setImages'
 
 export default defineComponent({
   setup (_, context: any) {
     useCanvas()
-
-    const itemsStore = appStores.itemsStore
-    Item.fetchList().then((items: Item[]) => {
-      itemsStore.items.value = items
-    })
+    setImages(context)
 
     let uid: string | undefined = undefined
     const firebase = context.root.$firebase

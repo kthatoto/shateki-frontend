@@ -73,6 +73,7 @@ export default (d: Drawer, state: CanvasState) => {
           } else {
             CreateSound(gunHitSound)
           }
+          updateItemOnFB(hitItem.name, hitItem.hp)
         } else {
           CreateSound(gunOutSound)
         }
@@ -96,6 +97,11 @@ export default (d: Drawer, state: CanvasState) => {
       return b
     }).filter((b: Bullet | undefined) => b)
     bulletsStore.bullets.value = newBullets as Bullet[]
+  }
+
+  const updateItemOnFB = (name: string, hp: number) => {
+    if (!database.value) return
+    database.value.ref(`items/${name}`).update({ hp })
   }
 
   return {
