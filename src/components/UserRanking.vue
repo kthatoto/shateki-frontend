@@ -26,7 +26,7 @@ export default defineComponent({
     const firebase = context.root.$firebase
     const database = firebase.database()
     const usersRef = database.ref('users')
-    usersRef.on('value', (snapshot) => {
+    usersRef.on('value', (snapshot: any) => {
       const data = snapshot.val()
       users.value = Object.values(data)
       console.log(users.value)

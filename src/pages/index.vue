@@ -17,7 +17,7 @@ import { appStores } from '@/stores/appStores'
 import useCanvas from '@/canvas/shateki/index'
 import bgmSound from '@/assets/musics/background.mp3'
 import setImages from '@/hooks/setImages'
-import UserRanking from '@/components/UserRanking'
+import UserRanking from '@/components/UserRanking.vue'
 
 export default defineComponent({
   components: { UserRanking },
