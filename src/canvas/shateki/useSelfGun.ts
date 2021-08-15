@@ -2,6 +2,7 @@ import { ref } from '@vue/composition-api'
 
 import Drawer from './drawer'
 import { CanvasState, TARGET_SPEED } from './index'
+import firebase from '@/plugins/firebase'
 
 import { appStores } from '@/stores/appStores'
 
@@ -26,7 +27,11 @@ export default (d: Drawer, state: CanvasState) => {
     }
 
     if (callingFlag <= 0) {
-      gunRef.value.set({ uid: uid.value, x })
+      gunRef.value.set({
+        uid: uid.value,
+        x,
+        timestamp: database.value.app.firebase_.database.ServerValue.TIMESTAMP
+      })
       callingFlag = maxCallingFlag
     } else {
       callingFlag--

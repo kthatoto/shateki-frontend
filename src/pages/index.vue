@@ -37,17 +37,19 @@ export default defineComponent({
       const userRef = firebase.database().ref(`users/${uid}`)
       userRef.on('value', (snapshot: any) => {
         const data = snapshot.val()
+        const common = {
+          name: user.displayName,
+          photoURL: user.photoURL,
+          online: true,
+          timestamp: firebase.database.ServerValue.TIMESTAMP
+        }
         database.ref(`users/${uid}`).update(data ? {
           ...data,
-          name: user.displayName,
-          photoURL: user.photoURL,
-          online: true
+          ...common
         } : {
           uid,
-          name: user.displayName,
-          photoURL: user.photoURL,
           score: 0,
-          online: true
+          ...common
         })
       })
     })

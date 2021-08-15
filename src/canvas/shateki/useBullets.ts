@@ -82,7 +82,11 @@ export default (d: Drawer, state: CanvasState) => {
       if (database.value && uid.value) {
         if (!bulletRef.value) bulletRef.value = database.value.ref(`bullets/${uid.value}`)
         if (callingFlag <= 0) {
-          bulletRef.value.set({ uid: uid.value, ...b.position })
+          bulletRef.value.set({
+            uid: uid.value,
+            ...b.position,
+            timestamp: database.value.app.firebase_.database.ServerValue.TIMESTAMP
+          })
           callingFlag = maxCallingFlag
         } else {
           callingFlag--

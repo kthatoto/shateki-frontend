@@ -52,8 +52,8 @@ export default () => {
   const { shootBullet, drawBullets } = useBullets(d, state)
 
   setTimeout(() => {
-    useOtherGuns(d)
-    useOtherBullets(d)
+    // useOtherGuns(d)
+    // useOtherBullets(d)
   }, 3000)
 
   const draw = () => {
