@@ -12,8 +12,10 @@ export interface User {
 export const buildRootStore = () => {
   const state = reactive<{
     user?: User
+    score: number
   }>({
-    user: undefined
+    user: undefined,
+    score: 0
   })
   const setUser = (user: User) => {
     state.user = user
@@ -27,6 +29,7 @@ export const buildRootStore = () => {
 
   const database = ref<any>(undefined)
   const setDatabase = (db: any) => database.value = db
+  const setUserScore = (score: number) => state.score = score
 
   return {
     state,
@@ -35,7 +38,8 @@ export const buildRootStore = () => {
     uid,
 
     database,
-    setDatabase
+    setDatabase,
+    setUserScore
   }
 }
 

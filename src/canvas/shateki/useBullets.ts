@@ -71,6 +71,7 @@ export default (d: Drawer, state: CanvasState) => {
           if (hitItem.hp <= 0) {
             itemsStore.defeatItem(hitItem)
             hitItem.hp = 0
+            getScore(hitItem.score)
           } else {
             CreateSound(gunHitSound)
           }
@@ -103,6 +104,13 @@ export default (d: Drawer, state: CanvasState) => {
   const updateItemOnFB = (name: string, hp: number) => {
     if (!database.value) return
     database.value.ref(`items/${name}`).update({ hp })
+  }
+  const getScore = (score: number) => {
+    const currentScore = appStores.rootStore.state.score
+    const newScore = currentScore + score
+    appStores.rootStore.setUserScore(newScore)
+    if (!database.value) return
+    database.value.ref(`users/${uid.value}`).update({ score: newScore })
   }
 
   return {

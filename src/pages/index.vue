@@ -36,6 +36,7 @@ export default defineComponent({
         if (execed) return
         execed = true
         const data = snapshot.val()
+        appStores.rootStore.setUserScore(data ? data.score : 0)
         const common = {
           name: user.displayName,
           photoURL: user.photoURL,
