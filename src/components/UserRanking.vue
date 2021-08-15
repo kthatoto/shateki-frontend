@@ -22,7 +22,7 @@ interface User {
 }
 
 export default defineComponent({
-  setup (_, context) {
+  setup (_, context: any) {
     const firebase = context.root.$firebase
     const database = firebase.database()
     const usersRef = database.ref('users')
