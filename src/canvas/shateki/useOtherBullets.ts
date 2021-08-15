@@ -18,9 +18,11 @@ export default (d: Drawer) => {
     const newBullets: Vector[] = []
     const data: any = snapshot.val()
     if (!data) return
+    const now = new Date()
     Object.keys(data).forEach((uidKey: string) => {
       if (uidKey === appStores.rootStore.uid.value) return
       const target: any = data[uidKey]
+      if (now.getTime() - target.timestamp > 3 * 1000) return // 3秒以上前のものは表示しない
       newBullets.push(target)
     })
     bullets.value = newBullets
