@@ -25,6 +25,7 @@ export default class Item {
 
     this.alive = true
     this.hp = weight
+    this.revivalCount = 0
 
     const newImage = new Image()
     newImage.src = '/images/items/' + imageUrl
@@ -54,4 +55,6 @@ export default class Item {
   image?: any
   alive: boolean
   hp: number
+
+  revivalCount: number
 }

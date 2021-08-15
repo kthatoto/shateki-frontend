@@ -33,4 +33,20 @@ export default (context: any) => {
       })
     }, 3000)
   })
+
+  setInterval(() => {
+    const database = context.root.$firebase.database()
+    if (!itemsStore.items.value) return
+    itemsStore.items.value = itemsStore.items.value.map((item: Item) => {
+      if (item.alive) return item
+      item.revivalCount += 1
+      console.log(item.revivalCount)
+      if (item.revivalCount / 100 > Math.random()) {
+        item.hp = item.weight
+        item.alive = true
+        database.ref(`items/${item.name}`).update({ hp: item.hp })
+      }
+      return item
+    })
+  }, 3000)
 }

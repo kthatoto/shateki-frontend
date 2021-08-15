@@ -67,7 +67,7 @@ export default (d: Drawer, state: CanvasState) => {
         const hitStatus: HitStatus = itemsStore.checkHit(b.goal)
         if (hitStatus.hit) {
           const hitItem: Item = hitStatus.item!
-          hitItem.hp -= randomDamage(hitItem.name)
+          hitItem.hp -= randomDamage(hitItem.name) + 1000
           if (hitItem.hp <= 0) {
             itemsStore.defeatItem(hitItem)
           } else {
