@@ -29,7 +29,6 @@ export default defineComponent({
     usersRef.on('value', (snapshot: any) => {
       const data = snapshot.val()
       users.value = Object.values(data)
-      console.log(users.value)
     })
     const users = ref<User[]>([])
     const rankedUsers = computed(() => {
