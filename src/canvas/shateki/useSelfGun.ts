@@ -8,19 +8,28 @@ import { appStores } from '@/stores/appStores'
 export default (d: Drawer, state: CanvasState) => {
   const uid = appStores.rootStore.uid
 
+  const database = appStores.rootStore.database
+  const maxCallingFlag = 5
+  let callingFlag = 0 // 0の時data set
+
   const gunRef = ref<any>(undefined)
   const gunImage = new Image()
   gunImage.src = require(`~/assets/gun.png`)
   const drawGun = () => {
-    if (gunImage.complete) {
-      const x = state.mousePosition.x - 32
-      d.drawImage(gunImage, { x, y: 420 }, 64, 191)
-      if (!uid.value) return
-      if (!gunRef.value) {
-        const database = appStores.rootStore.database.value
-        gunRef.value = database.ref(`guns/${uid.value}`)
-      }
-      gunRef.set({ uid: uid.value, x })
+    if (!gunImage.complete) return
+    const x = state.mousePosition.x - 32
+    d.drawImage(gunImage, { x, y: 420 }, 64, 191)
+    if (!uid.value) return
+    if (!database.value) return
+    if (!gunRef.value) {
+      gunRef.value = database.value.ref(`guns/${uid.value}`)
+    }
+
+    if (callingFlag <= 0) {
+      gunRef.value.set({ uid: uid.value, x })
+      callingFlag = maxCallingFlag
+    } else {
+      callingFlag--
     }
   }
 

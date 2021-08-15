@@ -1,4 +1,4 @@
-import { reactive } from '@vue/composition-api'
+import { reactive, ref } from '@vue/composition-api'
 
 import { appStores } from '@/stores/appStores'
 import { HitStatus } from '@/stores/itemsStore'
@@ -31,6 +31,11 @@ export default (d: Drawer, state: CanvasState) => {
     reloaded: true
   })
 
+  const uid = appStores.rootStore.uid
+  const database = appStores.rootStore.database
+  const maxCallingFlag = 2
+  let callingFlag = 0 // 0の時data set
+
   const shootBullet = () => {
     if (!bulletState.reloaded) return
 
@@ -46,6 +51,7 @@ export default (d: Drawer, state: CanvasState) => {
     setTimeout(() => bulletState.reloaded = true, RELOAD_TIME)
   }
 
+  const bulletRef = ref<any>(undefined)
   const bulletImage = new Image()
   bulletImage.src = require('~/assets/bullet.png')
   const drawBullets = () => {
@@ -72,6 +78,17 @@ export default (d: Drawer, state: CanvasState) => {
         }
       }
       d.drawImage(bulletImage, { x: b.position.x - 7, y: b.position.y }, 14, 28)
+
+      if (database.value && uid.value) {
+        if (!bulletRef.value) bulletRef.value = database.value.ref(`bullets/${uid.value}`)
+        if (callingFlag <= 0) {
+          bulletRef.value.set({ uid: uid.value, ...b.position })
+          callingFlag = maxCallingFlag
+        } else {
+          callingFlag--
+        }
+      }
+
       return b
     }).filter((b: Bullet | undefined) => b)
     bulletsStore.bullets.value = newBullets as Bullet[]

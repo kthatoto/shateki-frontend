@@ -8,6 +8,9 @@ import useSelfGun from './useSelfGun'
 import useBullets from './useBullets'
 import Item from '@/models/item'
 
+import useOtherGuns from './useOtherGuns'
+import useOtherBullets from './useOtherBullets'
+
 interface Vector {
   x: number
   y: number
@@ -47,6 +50,11 @@ export default () => {
   const { drawBackground, drawBases } = useDraws(d)
   const { drawGun, moveTargetVertically, drawTarget } = useSelfGun(d, state)
   const { shootBullet, drawBullets } = useBullets(d, state)
+
+  setTimeout(() => {
+    useOtherGuns(d)
+    useOtherBullets(d)
+  }, 3000)
 
   const draw = () => {
     d.setState(state)
