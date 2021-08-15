@@ -50,10 +50,12 @@ export default () => {
   const { drawBackground, drawBases } = useDraws(d)
   const { drawGun, moveTargetVertically, drawTarget } = useSelfGun(d, state)
   const { shootBullet, drawBullets } = useBullets(d, state)
+  let drawOtherBullets = () => {}
+  let drawOtherGuns = () => {}
 
   setTimeout(() => {
-    useOtherGuns(d)
-    useOtherBullets(d)
+    drawOtherGuns = useOtherGuns(d)
+    drawOtherBullets = useOtherBullets(d)
   }, 3000)
 
   const draw = () => {
@@ -65,6 +67,9 @@ export default () => {
 
     drawItems(d)
     drawBullets()
+
+    drawOtherBullets()
+    drawOtherGuns()
 
     if (appStores.rootStore.state.user) {
       drawGun()
