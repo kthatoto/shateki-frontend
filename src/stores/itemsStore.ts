@@ -3,7 +3,7 @@ import { ref, computed } from '@vue/composition-api'
 import Item from '@/models/item'
 import CreateSound from '@/canvas/shateki/createSound'
 import itemDropDefaultSound from '@/assets/musics/item_drop_default.mp3'
-import itemDropGreatSound from '@/assets/musics/item_drop_great.mp3'
+import itemDropGreatSound from '@/assets/musics/item_drop_great1.mp3'
 import itemDropMoneySound from '@/assets/musics/item_drop_money.mp3'
 
 interface Vector { x: number; y: number }
